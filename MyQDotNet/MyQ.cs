@@ -17,7 +17,7 @@ namespace MyQDotNet
     {
         public const string AppId = "JVM/G9Nwih5BwKgNCjLxiFUQxQijAebyyg8QUHr7JOrP+tuPb8iHfRHKwTmDzHOu";
         public const long ApiVersion = 5;
-        public static readonly string HostUri = $"https://api.myqdevice.com/api/${ApiVersion}";
+        public static readonly string HostUri = $"https://api.myqdevice.com/api/v{ApiVersion}";
         public static readonly TimeSpan StateUpdateInterval = TimeSpan.FromSeconds(5);
 
         public AccountInfoResponse AccountInfo { get; private set; }
