@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using MyQDotNet.Requests;
+using Newtonsoft.Json;
 
 namespace MyQDotNet.Devices
 {
@@ -35,7 +35,7 @@ namespace MyQDotNet.Devices
 
         private async Task PerformCommand(GarageDoorCommand command)
         {
-            var json = JsonSerializer.Serialize(new GarageDoorAction(command));
+            var json = JsonConvert.SerializeObject(new GarageDoorAction(command));
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _myQ.Client.PutAsync(SetStateUri, content);
             if (!response.IsSuccessStatusCode)

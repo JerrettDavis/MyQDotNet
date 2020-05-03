@@ -4,12 +4,12 @@ using System.Linq;
 using System.Net.Http;
 using System.Security.Authentication;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using MyQDotNet.Common.Extensions;
 using MyQDotNet.Mapper;
 using MyQDotNet.Requests;
 using MyQDotNet.Responses;
+using Newtonsoft.Json;
 
 namespace MyQDotNet
 {
@@ -40,13 +40,13 @@ namespace MyQDotNet
         private static Uri LoginUri => new Uri($"{HostUri}/Login");
         public async Task Authenticate(string username, string password)
         {
-            var json = JsonSerializer.Serialize(new AuthenticateRequest(username, password));
+            var json = JsonConvert.SerializeObject(new AuthenticateRequest(username, password));
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await Client.PostAsync(LoginUri, content);
             if (response.IsSuccessStatusCode)
             {
                 var body = await response.Content.ReadAsStringAsync();
-                var parsed = JsonSerializer.Deserialize<LoginResponse>(body);
+                var parsed = JsonConvert.DeserializeObject<LoginResponse>(body);
 
                 _securityToken = parsed.SecurityToken;
                 
@@ -65,7 +65,7 @@ namespace MyQDotNet
             if (!response.IsSuccessStatusCode) throw new AuthenticationException();
             
             var body = await response.Content.ReadAsStringAsync();
-            var parsed = JsonSerializer.Deserialize<AccountInfoResponse>(body);
+            var parsed = JsonConvert.DeserializeObject<AccountInfoResponse>(body);
 
             return parsed;
         }
@@ -84,8 +84,8 @@ namespace MyQDotNet
             var response = await Client.GetAsync(DevicesUri);
             if (!response.IsSuccessStatusCode) throw new AuthenticationException();
             
-            await using var body = await response.Content.ReadAsStreamAsync();
-            var parsed = await JsonSerializer.DeserializeAsync<DevicesResponse>(body);
+            var body = await response.Content.ReadAsStringAsync();
+            var parsed = JsonConvert.DeserializeObject<DevicesResponse>(body);
             
             foreach (var device in parsed.Items.Select(e => DeviceMapper.MapResponse(e, this)))
             {

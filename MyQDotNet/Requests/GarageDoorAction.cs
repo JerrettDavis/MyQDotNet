@@ -1,10 +1,10 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace MyQDotNet.Requests
 {
     public class GarageDoorAction
     {
-        [JsonPropertyName("action_type")]
+        [JsonProperty("action_type")]
         public string ActionType { get; set; }
         
         public GarageDoorAction() {}
