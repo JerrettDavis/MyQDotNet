@@ -5,6 +5,15 @@
         <AssemblyName>MyQDotNet</AssemblyName>
         <RootNamespace>MyQDotNet</RootNamespace>
         <LangVersion>latest</LangVersion>
+        <PackageVersion>0.0.1</PackageVersion>
+        <Title>MyQDotNet</Title>
+        <Authors>Jerrett Davis</Authors>
+        <Description>An official C# wrapper for the MyQ API.</Description>
+        <Copyright>Jerrett Davis</Copyright>
+        <PackageProjectUrl>https://github.com/JerrettDavis/MyQDotNet</PackageProjectUrl>
+        <PackageLicenseUrl>https://choosealicense.com/licenses/mit/</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/JerrettDavis/MyQDotNet</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
