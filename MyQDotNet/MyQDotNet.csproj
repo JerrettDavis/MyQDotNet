@@ -8,7 +8,7 @@
         <PackageVersion>0.0.1</PackageVersion>
         <Title>MyQDotNet</Title>
         <Authors>Jerrett Davis</Authors>
-        <Description>An official C# wrapper for the MyQ API.</Description>
+        <Description>An unofficial C# wrapper for the MyQ API.</Description>
         <Copyright>Jerrett Davis</Copyright>
         <PackageProjectUrl>https://github.com/JerrettDavis/MyQDotNet</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
