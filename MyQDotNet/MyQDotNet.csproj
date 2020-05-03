@@ -11,6 +11,7 @@
         <Description>An official C# wrapper for the MyQ API.</Description>
         <Copyright>Jerrett Davis</Copyright>
         <PackageProjectUrl>https://github.com/JerrettDavis/MyQDotNet</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/JerrettDavis/MyQDotNet</RepositoryUrl>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
