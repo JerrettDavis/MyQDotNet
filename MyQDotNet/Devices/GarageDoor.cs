@@ -18,8 +18,8 @@ namespace MyQDotNet.Devices
             _myQ = myQ;
         }
 
-        public Uri ParentDevice { get; set; }
-        public string ParentDeviceId { get; set; }
+        public Uri? ParentDevice { get; set; }
+        public string? ParentDeviceId { get; set; }
 
         public bool CloseAllowed => ((GarageDoorState) State)?.IsUnattendedCloseAllowed ?? default;
         public bool OpenAllowed => ((GarageDoorState) State)?.IsUnattendedOpenAllowed ?? default;
@@ -30,14 +30,24 @@ namespace MyQDotNet.Devices
             private set => ((GarageDoorState) State).DoorState = value;
         }
 
-        private Uri SetStateUri =>
-            new Uri($"{MyQ.HostUri}/Accounts/{_myQ.AccountId}/Devices/{SerialNumber}/actions");
+        public GarageDoorState GarageDoorState => (State as GarageDoorState)!;
+
+        private Uri SetStateUri => new Uri(string.Format(
+            $"{MyQ.HostUri}/Accounts/{_myQ.AccountId}/Devices/{SerialNumber}/actions", 
+            MyQ.DeviceApiVersion));
 
         private async Task PerformCommand(GarageDoorCommand command)
         {
             var json = JsonConvert.SerializeObject(new GarageDoorAction(command));
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await _myQ.Client.PutAsync(SetStateUri, content);
+            if (!response.IsSuccessStatusCode)
+                throw new InvalidOperationException();
+        }
+        
+        private async Task PerformCommand(Uri command)
+        {
+            var response = await _myQ.Client.GetAsync(command);
             if (!response.IsSuccessStatusCode)
                 throw new InvalidOperationException();
         }
@@ -106,15 +116,15 @@ namespace MyQDotNet.Devices
         public bool GdoLockConnected { get; set; }
         public bool AttachedWorkLightErrorPresent { get; set; }
         public DoorState DoorState { get; set; }
-        public Uri Open { get; set; }
-        public Uri Close { get; set; }
-        public string PassthroughInterval { get; set; }
-        public string DoorAjarInterval { get; set; }
-        public string InvalidCredentialWindow { get; set; }
-        public string InvalidShutoutPeriod { get; set; }
+        public Uri Open { get; set; } = null!;
+        public Uri Close { get; set; } = null!;
+        public string PassthroughInterval { get; set; } = null!;
+        public string DoorAjarInterval { get; set; } = null!;
+        public string InvalidCredentialWindow { get; set; } = null!;
+        public string InvalidShutoutPeriod { get; set; } = null!;
         public bool IsUnattendedOpenAllowed { get; set; }
         public bool IsUnattendedCloseAllowed { get; set; }
-        public string AuxRelayDelay { get; set; }
+        public string AuxRelayDelay { get; set; } = null!;
         public bool UseAuxRelay { get; set; }
         public bool RexFiresDoor { get; set; }
         public bool CommandChannelReportStatus { get; set; }

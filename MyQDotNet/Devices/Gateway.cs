@@ -6,16 +6,23 @@ namespace MyQDotNet.Devices
 {
     public class Gateway : Device
     {
-        public string FirmwareVersion => ((GatewayState) State)?.FirmwareVersion;
+        public string FirmwareVersion => ((GatewayState) State)?.FirmwareVersion!;
     }
 
     [PublicAPI]
     public class GatewayState : DeviceState
     {
+        public GatewayState()
+        {
+            PhysicalDevices = new HashSet<string>();
+
+            FirmwareVersion = "";
+        }
+        
         public string FirmwareVersion { get; set; }
         public bool HomekitCapable { get; set; }
         public bool HomekitEnabled { get; set; }
-        public Uri Learn { get; set; }
+        public Uri Learn { get; set; } = null!;
         public bool LearnMode { get; set; }
         public DateTimeOffset? UpdatedDate { get; set; }
         public IEnumerable<string> PhysicalDevices { get; set; }
