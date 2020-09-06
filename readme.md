@@ -12,7 +12,7 @@ Use at your own risk.*
 var api = new MyQ(new HttpClient());
 await api.Authenticate("username", "password");
 
-var garageDoor = api.Devices.Where(d => d.DeviceFamily == "garagedoor")
+var garageDoor = api.Devices.Values.Where(d => d.DeviceFamily == "garagedoor")
                             .Cast<GarageDoor>()
                             .First();
 
